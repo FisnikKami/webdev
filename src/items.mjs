@@ -1,42 +1,44 @@
-// mock data for simple API
+// mock data for a simple API
 const items = [
-    {id: 1, name: 'Item 1'},
-    {id: 2, name: 'Item 2'},
-    {id: 3, name: 'Item kolme'},
-    {id: 4, name: 'Item neljä'},
-  ];
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item kolme' },
+    { id: 4, name: 'Item neljä' },
+];
 
-  const getItems = (req, res) => {
+const getItems = (req, res) => {
     res.json(items);
-  };
+};
 
-  // palauta vain se objekti, jonka id vastaa pyydettyä, muuten 404
-  const getItemById =  (req, res) => {
-    // console.log('requested item id', req.params.id);
+// Return only the object whose id matches the requested one, otherwise 404
+const getItemById = (req, res) => {
     const itemFound = items.find(item => item.id == req.params.id);
-    // console.log('found item', itemFound);
     if (itemFound) {
-      res.json(itemFound);
+        res.json(itemFound);
     } else {
-      res.status(404).json({error: 'not found'});
+        res.status(404).json({ error: 'not found' });
     }
-  };
+};
 
-  const postItem = (req, res) => {
-    // TODO: lisää postattu item items-taulukkoon
-    res.json({message: 'item created'});
-  };
+const postItem = (req, res) => {
+    console.log("post item request,", req.body);
+    if (!req.body.name) {
+        return res.status(400).json({ error: "item name missing" });
+    }
 
-  const deleteItem = (req, res) => {
+    // TODO: add the posted item to the items array
+    res.json({ message: 'item created' });
+};
+
+const deleteItem = (req, res) => {
     // TODO: implement delete item
-    // tip: array.findIndex() ?
-    res.json({message: 'delete placeholder'});
-  };
+    // Tip: array.findIndex()?
+    res.json({ message: 'delete placeholder' });
+};
 
-  const putItem = (req, res) => {
+const putItem = (req, res) => {
     // TODO: implement modify item
-    res.json({message: 'put placeholder'});
-  };
+    res.json({ message: 'put placeholder' });
+};
 
-
-  export {getItems, getItemById, postItem, deleteItem, putItem};
+export { getItems, getItemById, postItem, deleteItem, putItem };
